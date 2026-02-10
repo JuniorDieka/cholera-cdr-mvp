@@ -137,13 +137,13 @@ def forecast_summary(
     Returns:
         Summary DataFrame with key forecast information
     """
-    # Filter to forecast period only
-    forecast_only = forecast[forecast['ds'] > forecast['ds'].max() - pd.Timedelta(weeks=4)]
+    # Return all forecast data
+    forecast_data = forecast
     
     # Calculate key metrics
     summary_data = []
     
-    for _, row in forecast_only.iterrows():
+    for _, row in forecast_data.iterrows():
         summary_data.append({
             'forecast_date': row['ds'],
             'predicted_cases': row['yhat'],

@@ -60,8 +60,8 @@ class QualityEngine:
             if reported_cfr is not None:
                 difference = abs(calculated_cfr - reported_cfr)
                 
-                if difference > self.tolerance_cfr:
-                    severity = 'ERROR' if difference > self.tolerance_cfr * 2 else 'WARNING'
+                if difference >= self.tolerance_cfr:
+                    severity = 'ERROR' if difference >= self.tolerance_cfr * 2 else 'WARNING'
                     
                     checks.append(QualityCheck(
                         check_id=f"{report_id}_cfr_mismatch",
@@ -118,8 +118,8 @@ class QualityEngine:
                 difference = abs(total_confirmed - confirmed_cases)
                 tolerance = int(confirmed_cases * self.tolerance_cases)
                 
-                if difference > tolerance:
-                    severity = 'ERROR' if difference > tolerance * 2 else 'WARNING'
+                if difference >= tolerance:
+                    severity = 'ERROR' if difference >= tolerance * 2 else 'WARNING'
                     
                     checks.append(QualityCheck(
                         check_id=f"{report_id}_cases_total_mismatch",
@@ -137,8 +137,8 @@ class QualityEngine:
                 difference = abs(total_suspected - suspected_cases)
                 tolerance = int(suspected_cases * self.tolerance_cases)
                 
-                if difference > tolerance:
-                    severity = 'ERROR' if difference > tolerance * 2 else 'WARNING'
+                if difference >= tolerance:
+                    severity = 'ERROR' if difference >= tolerance * 2 else 'WARNING'
                     
                     checks.append(QualityCheck(
                         check_id=f"{report_id}_suspected_total_mismatch",
@@ -382,18 +382,16 @@ class QualityEngine:
         # Weight checks by severity
         severity_weights = {'ERROR': 0, 'WARNING': 50, 'INFO': 90}
         
-        total_weight = 0
         total_score = 0
         
         for check in checks:
             weight = severity_weights.get(check.severity, 50)
-            total_weight += weight
             total_score += weight
         
-        if total_weight == 0:
-            return 100.0
+        # Calculate average score
+        average_score = total_score / len(checks)
         
-        return (total_score / total_weight) * 100
+        return average_score
 
 
 if __name__ == "__main__":
