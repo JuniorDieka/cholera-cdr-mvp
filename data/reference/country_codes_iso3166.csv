@@ -1,0 +1,54 @@
+﻿country_code,country_name,who_region,au_region,population
+DZA,Algeria,EMRO,North,44400000
+AGO,Angola,AFRO,Central,31800000
+BEN,Benin,AFRO,West,12300000
+BWA,Botswana,AFRO,Southern,2630000
+BFA,Burkina Faso,AFRO,West,20900000
+BDI,Burundi,AFRO,East,12200000
+CMR,Cameroon,AFRO,Central,27200000
+CPV,Cape Verde,AFRO,West,598000
+CAF,Central African Republic,AFRO,Central,4700000
+TCD,Chad,AFRO,Central,16400000
+COM,Comoros,AFRO,East,850000
+COG,Congo,AFRO,Central,5570000
+CIV,Côte d'Ivoire,AFRO,West,25900000
+COD,Democratic Republic of the Congo,AFRO,Central,95800000
+DJI,Djibouti,EMRO,East,988000
+EGY,Egypt,EMRO,North,102000000
+GNQ,Equatorial Guinea,AFRO,Central,1400000
+ERI,Eritrea,AFRO,East,3600000
+ETH,Ethiopia,AFRO,East,120000000
+GAB,Gabon,AFRO,Central,2220000
+GMB,Gambia,AFRO,West,2480000
+GHA,Ghana,AFRO,West,31300000
+GIN,Guinea,AFRO,West,13100000
+GNB,Guinea-Bissau,AFRO,West,1960000
+KEN,Kenya,AFRO,East,54000000
+LSO,Lesotho,AFRO,Southern,2300000
+LBR,Liberia,AFRO,West,5100000
+LBY,Libya,EMRO,North,7000000
+MDG,Madagascar,AFRO,East,28000000
+MWI,Malawi,AFRO,Southern,19100000
+MLI,Mali,AFRO,West,20000000
+MRT,Mauritania,AFRO,West,4620000
+MUS,Mauritius,AFRO,East,1270000
+MAR,Morocco,EMRO,North,36900000
+MOZ,Mozambique,AFRO,Southern,31100000
+NAM,Namibia,AFRO,Southern,2540000
+NER,Niger,AFRO,West,24100000
+NGA,Nigeria,AFRO,West,206000000
+RWA,Rwanda,AFRO,East,13900000
+STP,São Tomé and Príncipe,AFRO,Central,2230000
+SEN,Senegal,AFRO,West,16700000
+SYC,Seychelles,AFRO,East,98000
+SLE,Sierra Leone,AFRO,West,7980000
+SOM,Somalia,EMRO,East,15900000
+ZAF,South Africa,AFRO,Southern,59300000
+SSD,South Sudan,AFRO,East,11100000
+SDN,Sudan,EMRO,North,43800000
+TZA,Tanzania,AFRO,East,59700000
+TGO,Togo,AFRO,West,8280000
+TUN,Tunisia,EMRO,North,11900000
+UGA,Uganda,AFRO,East,45700000
+ZMB,Zambia,AFRO,Southern,19400000
+ZWE,Zimbabwe,AFRO,Southern,14800000
