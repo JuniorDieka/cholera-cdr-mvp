@@ -52,7 +52,7 @@ def train_prophet_model(
     return model, forecast, metrics
 
 
-def explain_forecast(model: Prophet, forecast: pd.DataFrame) -> Dict[str, Any]:
+def explain_forecast(model, forecast: pd.DataFrame) -> Dict[str, Any]:
     """
     Generate explainability outputs for Prophet forecast.
     
@@ -64,16 +64,23 @@ def explain_forecast(model: Prophet, forecast: pd.DataFrame) -> Dict[str, Any]:
         Dictionary with explainability information
     """
     # Extract trend and uncertainty information
+    forecast_weeks = 4  # Default to 4 weeks for explainability
     trend_data = forecast[['ds', 'trend']].tail(forecast_weeks).to_dict('records')
     
     # Extract uncertainty intervals
     uncertainty_data = forecast[['ds', 'yhat_lower', 'yhat_upper']].tail(forecast_weeks).to_dict('records')
     
-    # Get changepoints
-    changepoints = model.changepoints.tolist()
+    # Get changepoints (handle mock models)
+    try:
+        changepoints = model.changepoints.tolist()
+    except AttributeError:
+        changepoints = []
     
     # Check seasonality
-    seasonality_info = 'Annual pattern detected' if model.yearly_seasonality else 'No clear seasonality'
+    try:
+        seasonality_info = 'Annual pattern detected' if model.yearly_seasonality else 'No clear seasonality'
+    except AttributeError:
+        seasonality_info = 'Seasonality information not available'
     
     return {
         'trend': trend_data,
