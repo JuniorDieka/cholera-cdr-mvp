@@ -41,7 +41,8 @@ env/
 
 # Jupyter Notebooks
 .ipynb_checkpoints
-*.ipynb
+# Allow notebooks in notebooks/ directory for Fabric deployment
+!notebooks/*.ipynb
 
 # Fabric artifacts
 *.pbix
@@ -53,6 +54,7 @@ data/processed/
 *.csv
 *.xlsx
 !data/reference/*.csv
+!powerbi/mock_data/*.csv
 
 # Logs
 *.log

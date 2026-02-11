@@ -1,0 +1,5 @@
+forecast_date,epi_week,predicted_cases,lower_bound,upper_bound,confidence_level
+2025-01-05,53,127,88,165,95
+2025-01-12,1,131,91,170,95
+2025-01-19,2,141,98,183,95
+2025-01-26,3,144,100,187,95
