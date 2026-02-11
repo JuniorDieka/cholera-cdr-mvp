@@ -10,7 +10,7 @@
 
 **Proof of Concept: Federated Public Health Surveillance System for Continental Cholera Monitoring**
 
-This MVP demonstrates a complete, production-ready data pipeline for automated cholera surveillance across 53 African countries. The system extracts data from weekly PDF situation reports, performs epidemiological analysis, detects outbreak hotspots, and generates 4-week case forecasts—all while maintaining data sovereignty through a federated architecture.
+This MVP demonstrates a complete, production-ready data pipeline for automated cholera surveillance across 53 African countries. The system extracts data from weekly PDF situation reports, performs epidemiological analysis, detects outbreak hotspots, and generates 4-week case forecasts all while maintaining data sovereignty through a federated architecture.
 
 **Status:** ✅ **Local MVP Complete** | ⏳ Awaiting Microsoft Fabric Capacity Provisioning
 
