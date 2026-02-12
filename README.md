@@ -459,6 +459,31 @@ This MVP is designed for a **federated model** where:
 
 ---
 
+## 🌍 Integration with Africa CDC Systems
+
+### **Complementing the Event Management System (EMS)**
+
+This CDR is designed to work alongside Africa CDC's existing **Event Management System (EMS)**, operated by the Epidemic Intelligence Unit. The EMS (built on DHIS2) provides continental event-based surveillance across all diseases, producing weekly [Epidemic Intelligence Reports](https://africacdc.org/download/africa-cdc-epidemic-intelligence-report/) that include cholera data.
+
+**Example from EMS Report (27 Jan 2026):**
+- **Cholera in Africa (Event AC09337):** 1,112 confirmed cases, 102 suspected cases, 10 deaths (CFR: 0.82%)
+- **8 Member States:** Angola, Burundi, Ethiopia, Malawi, Mozambique, Namibia, Somalia, Zambia
+- **Risk Level:** HIGH (Multiple countries affected)
+
+**How CDR Enhances EMS:**
+
+| Feature | EMS (Current) | CDR (Enhancement) |
+|---------|--------------|-------------------|
+| **Scope** | All diseases & events | Cholera-specific deep dive |
+| **Data Entry** | Manual event registration | Automated PDF extraction |
+| **Analytics** | Event tracking & status | Epidemiological trends, forecasting |
+| **Forecasting** | None | 4-week predictive analytics |
+| **Platform** | DHIS2 (event surveillance) | Microsoft Fabric (analytics & ML) |
+
+The CDR processes cholera sections from EMS weekly reports, adding automated extraction, trend analysis, anomaly detection, and forecasting—complementing (not replacing) the existing surveillance infrastructure. Future integration will enable DHIS2 API connectivity for real-time data exchange.
+
+---
+
 ## 📞 Support & Contribution
 
 ### **For Questions:**
@@ -483,7 +508,7 @@ This project was built based on practical experience gained while enhancing the 
 
 
 **Special Thanks:**
-- Africa CDC Data Science & Analytics Unit
+- Africa CDC Epidemic Intelligence Unit Lead Unit
 - Member States for their collaboration and feedback during EMS advocacy missions
 - Field teams and public health officers who highlighted the need for data harmonization
 - Open-source community (pandas, Prophet, pdfplumber)
