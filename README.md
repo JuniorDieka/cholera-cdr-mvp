@@ -482,9 +482,175 @@ This CDR is designed to work alongside Africa CDC's existing **Event Management 
 
 The CDR processes cholera sections from EMS weekly reports, adding automated extraction, trend analysis, anomaly detection, and forecasting—complementing (not replacing) the existing surveillance infrastructure. Future integration will enable DHIS2 API connectivity for real-time data exchange.
 
+### **Future Evolution: Direct DHIS2/EMS Integration**
+
+**Important Note:** This MVP currently uses PDF extraction as a proof-of-concept, but the **production architecture will connect directly to the Event Management System (EMS)** via DHIS2 API.
+
+**Why This Matters:**
+- **EMS is the Source of Truth:** Africa CDC's EMS (built on DHIS2) is the continental surveillance platform that produces the weekly reports
+- **Member State Adoption:** Africa CDC has been actively helping member states adopt DHIS2 for health information systems
+- **Existing Infrastructure:** Most African countries already use DHIS2 for routine health data, making EMS integration seamless
+- **Real-Time Data:** Direct API connection eliminates PDF generation/parsing delays
+- **Data Quality:** Structured data from DHIS2 is more reliable than PDF extraction
+
+**Production Data Flow (Future):**
+```
+Member States (DHIS2 instances)
+        ↓
+Africa CDC Event Management System (DHIS2)
+        ↓ [DHIS2 API - Real-time]
+Cholera CDR Pipeline (Automated ingestion)
+        ↓
+Gold Layer Analytics Tables
+        ↓
+Power BI / Apache Superset Dashboards
+```
+
+This approach leverages Africa CDC's investment in DHIS2 capacity building across member states, ensuring the CDR integrates with existing workflows rather than creating parallel systems.
+
 ---
 
-## 📞 Support & Contribution
+## � Integration with Apache Superset
+
+### **For Organizations with Limited BI Teams**
+
+Many organizations use **Apache Superset** as their open-source BI platform due to limited resources for proprietary tools like Power BI or Tableau. The Cholera CDR MVP is **fully compatible with Superset** and can be integrated easily, while providing critical capabilities that Superset alone lacks.
+
+### **Quick Integration Setup**
+
+**Step 1: Connect Superset to CDR Gold Layer**
+```python
+# Superset can connect directly to your Gold layer tables
+# Connection String (for local Parquet files via DuckDB):
+duckdb:///path/to/cholera-cdr-mvp/data/gold_tables/
+
+# Or connect to Microsoft Fabric via SQL endpoint:
+mssql+pyodbc://your-fabric-workspace.database.windows.net/...
+```
+
+**Step 2: Create Datasets in Superset**
+- Add `dim_country`, `dim_date`, `fact_cholera_cases`, `fact_cholera_deaths`
+- Define metrics: Total Cases, CFR, Incidence Rate, Attack Rate
+- Set up relationships between dimensions and facts
+
+**Step 3: Build Dashboards**
+- Use Superset's no-code chart builder for standard visualizations
+- Create SQL Lab queries for custom analytics
+- Share dashboards with stakeholders
+
+### **What Superset Provides**
+
+✅ **No-Code Visualization Builder** - Easy chart creation for non-technical users  
+✅ **SQL IDE** - Advanced querying for data analysts  
+✅ **40+ Chart Types** - Bar charts, line charts, maps, tables, etc.  
+✅ **Dashboard Sharing** - Role-based access control  
+✅ **Open Source** - No licensing costs  
+✅ **Database Agnostic** - Connects to any SQL database
+
+### **What CDR Adds (Superset's Gaps)**
+
+| Capability | Superset Alone | CDR + Superset |
+|------------|----------------|----------------|
+| **Data Ingestion** | ❌ Manual SQL imports | ✅ Automated PDF extraction |
+| **Data Quality** | ❌ No validation | ✅ 6 automated QA rules |
+| **Epidemiological Metrics** | ⚠️ Manual SQL calculations | ✅ Pre-calculated (CFR, incidence, attack rate) |
+| **Anomaly Detection** | ❌ None | ✅ Modified Z-Score hotspot detection |
+| **Forecasting** | ❌ None | ✅ 4-week ML predictions with confidence intervals |
+| **Data Lineage** | ❌ Limited | ✅ Full Bronze→Silver→Gold audit trail |
+| **Dimensional Model** | ⚠️ Manual setup | ✅ Pre-built star schema |
+| **Weekly Automation** | ❌ Manual refresh | ✅ Automated pipeline execution |
+
+### **Why CDR Makes Superset Stronger**
+
+**1. Automated Data Pipeline**
+- Superset requires clean, structured data
+- CDR provides automated PDF extraction → validation → dimensional modeling
+- Eliminates manual data preparation work
+
+**2. Domain-Specific Analytics**
+- Superset is generic (works for any data)
+- CDR provides cholera-specific metrics, thresholds, and business logic
+- Epidemiologists get pre-calculated indicators without SQL knowledge
+
+**3. Predictive Capabilities**
+- Superset shows historical data only
+- CDR adds ML forecasting (Prophet model)
+- Enables proactive resource allocation
+
+**4. Data Quality Assurance**
+- Superset visualizes whatever data you give it (garbage in, garbage out)
+- CDR validates CFR calculations, case totals, completeness before visualization
+- Ensures dashboard accuracy and trustworthiness
+
+**5. Scalable Architecture**
+- Superset can struggle with large datasets without proper data modeling
+- CDR provides optimized star schema with surrogate keys
+- Fast query performance even as data grows
+
+### **Deployment Architecture**
+
+```
+Weekly PDF Reports
+        ↓
+┌─────────────────────────────────────────┐
+│  CHOLERA CDR PIPELINE                   │
+│  ✓ PDF Extraction (Automated)           │
+│  ✓ Data Validation (6 QA Rules)         │
+│  ✓ Dimensional Modeling (Star Schema)   │
+│  ✓ Anomaly Detection (Hotspots)         │
+│  ✓ ML Forecasting (4-week ahead)        │
+└─────────────────────────────────────────┘
+        ↓
+┌─────────────────────────────────────────┐
+│  GOLD LAYER (11 Analytics Tables)       │
+│  • dim_country, dim_date, dim_report    │
+│  • fact_cholera_cases, fact_deaths      │
+│  • epi_analytics_weekly, trends         │
+│  • ml_forecast_cases_4wk                │
+└─────────────────────────────────────────┘
+        ↓
+┌─────────────────────────────────────────┐
+│  APACHE SUPERSET                        │
+│  ✓ Connect to Gold Layer (SQL)          │
+│  ✓ Build Dashboards (No-Code)           │
+│  ✓ Share with Stakeholders (RBAC)       │
+│  ✓ Custom SQL Analysis (SQL Lab)        │
+└─────────────────────────────────────────┘
+```
+
+### **Sample Superset Dashboards (Using CDR Data)**
+
+**Dashboard 1: Continental Overview**
+- KPI Cards: Total Cases, Deaths, CFR, Affected Countries
+- Line Chart: Weekly Case Trends (from `epi_analytics_weekly`)
+- Map: Cases by Country (from `fact_cholera_cases` + `dim_country`)
+- Table: Top 10 Countries by Incidence Rate
+
+**Dashboard 2: Hotspot Detection**
+- Alert Cards: Critical Hotspots (from `epi_hotspot_detection`)
+- Scatter Plot: Cases vs Modified Z-Score (anomaly visualization)
+- Bar Chart: Growth Rates by Country (from `epi_country_trends`)
+
+**Dashboard 3: Forecasting**
+- Line Chart: Historical + 4-Week Forecast (from `ml_forecast_cases_4wk`)
+- Confidence Interval Bands: Upper/Lower Prediction Bounds
+- Table: Model Performance Metrics (RMSE, MAE, MAPE)
+
+### **Best Practices for CDR + Superset**
+
+1. **Use CDR for Data Preparation** - Let the automated pipeline handle extraction and validation
+2. **Use Superset for Visualization** - Leverage its 40+ chart types and dashboard builder
+3. **Schedule Weekly Refreshes** - Run CDR pipeline → Superset auto-refreshes from Gold layer
+4. **Train Users on Pre-Built Metrics** - Epidemiologists use CDR's calculated indicators
+5. **Extend with Custom SQL** - Data analysts can still write custom queries in SQL Lab
+
+
+
+
+
+---
+
+## �� Support & Contribution
 
 ### **For Questions:**
 - **Technical Issues:** Open a GitHub issue
@@ -508,7 +674,7 @@ This project was built based on practical experience gained while enhancing the 
 
 
 **Special Thanks:**
-- Africa CDC Epidemic Intelligence Unit Lead Unit
+- Africa CDC Epidemic Intelligence Unit Lead
 - Member States for their collaboration and feedback during EMS advocacy missions
 - Field teams and public health officers who highlighted the need for data harmonization
 - Open-source community (pandas, Prophet, pdfplumber)
