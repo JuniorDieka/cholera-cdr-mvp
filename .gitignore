@@ -51,10 +51,24 @@ env/
 # Data files (if sensitive)
 data/raw/
 data/processed/
+
+# Exclude Bronze/Silver/Gold layer tables (contain processed data)
+data/bronze_tables/*.parquet
+data/silver_tables/*.parquet
+data/gold_tables/*.parquet
+
+# Exclude all CSV/Excel except reference and mock data
 *.csv
 *.xlsx
 !data/reference/*.csv
 !powerbi/mock_data/*.csv
+
+# Exclude real situation reports (only keep synthetic samples)
+data/sample/*
+!data/sample/cholera_sitrep_2025_wk06.pdf
+!data/sample/cholera_sitrep_2025_wk07.pdf
+!data/sample/cholera_sitrep_2025_wk08.pdf
+!data/sample/.gitkeep
 
 # Logs
 *.log
@@ -75,3 +89,14 @@ htmlcov/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Sensitive documentation (may contain real data references)
+VALIDATION_REPORT.md
+DELIVERABLES_SUMMARY.md
+*_INTERNAL.md
+*_CONFIDENTIAL.md
+
+# Backup files
+*.backup
+*.bak
+*.tmp
